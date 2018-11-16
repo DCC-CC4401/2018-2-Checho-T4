@@ -44,7 +44,7 @@ class InstanciaCoevaluacion(models.Model):
 
 class Respuesta(models.Model):
     # id_instancia = models.ForeignKey(InstanciaCoevaluacion.indexes)
-    p1 = models.IntegerField(min_value 0, max_value=5)
+    p1 = models.IntegerField(min_value=0, max_value=5)
     p2 = models.IntegerField(min_value=0, max_value=5)
     p3 = models.IntegerField(min_value=0, max_value=5)
     p4 = models.IntegerField(min_value=0, max_value=5)
