@@ -50,3 +50,4 @@ class Respuesta(models.Model):
     p10 = models.CharField()
 
 
+
