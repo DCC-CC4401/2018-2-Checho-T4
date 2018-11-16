@@ -28,6 +28,9 @@ class Coevaluacion(models.Model):
     estado = models.CharField(default= 'Abierto')
     #curso = models.ForeignKey()
 
+    def __str__(self):
+        return f'{self.fecha_inicio}-{self.fecha_fin}'
+
 class InstanciaCoevaluacion(models.Model):
     # evaluador = models.ForeignKey()
     # evaluado = models.ForeignKey()
@@ -35,6 +38,9 @@ class InstanciaCoevaluacion(models.Model):
     # id_coevaluacion = models.ForeignKey(Coevaluacion.indexes)
     fecha_respuesta = models.DateField(default= None)
     respondida = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.fecha_respuesta}'
 
 class Respuesta(models.Model):
     # id_instancia = models.ForeignKey(InstanciaCoevaluacion.indexes)
@@ -49,5 +55,6 @@ class Respuesta(models.Model):
     p9 = models.CharField()
     p10 = models.CharField()
 
-
+    def __str__(self):
+        return f'{self.indexes}'
 
