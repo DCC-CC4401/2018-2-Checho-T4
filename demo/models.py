@@ -12,7 +12,7 @@ class Usuario(models.Model):
   email = models.EmailField()
 
   def __str__(self):
-    return '{self.email}-{self.rut}'
+    return f'{self.email}-{self.rut}'
 
 class Admin(Usuario):
   def is_admin(self):
@@ -39,6 +39,9 @@ class Curso(models.Model):
         choices=SEMESTRE,
     )
 
+    def __str__(self):
+        return f'{self.codigo}-{self.nombre}-{self.seccion}-{self.semestre}-{self.anho}'
+
 class Cargo(models.Model):
     CARGO = (
         (0, 'Profesor'),
@@ -53,13 +56,25 @@ class Cargo(models.Model):
         choices=CARGO
     )
 
+    def __str__(self):
+        return f'{self.estudiante}-{self.cargo}-{self.curso}'
+
+
 class Equipo(models.Model):
     nombre = models.CharField(max_length=50)
     integrantes = models.ManyToManyField('PersonaNatural', through='EstudianteEquipo')
 
+    def __str__(self):
+        return f'{self.nombre}'
+
+
 class EstudianteEquipo(models.Model):
     estudiante = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.estudiante}-{self.equipo}'
+
 
 class Coevaluacion(models.Model):
     fecha_inicio = models.DateField(default= date.today)
@@ -68,7 +83,7 @@ class Coevaluacion(models.Model):
     #curso = models.ForeignKey()
 
     def __str__(self):
-        return '{self.fecha_inicio}-{self.fecha_fin}'
+        return f'{self.fecha_inicio}-{self.fecha_fin}'
 
 class InstanciaCoevaluacion(models.Model):
     evaluador = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
@@ -79,7 +94,7 @@ class InstanciaCoevaluacion(models.Model):
     respondida = models.BooleanField(default=False)
 
     def __str__(self):
-        return '{self.fecha_respuesta}'
+        return f'{self.fecha_respuesta}'
 
 class Respuesta(models.Model):
     instancia_coevaluacion = models.ForeignKey(InstanciaCoevaluacion, on_delete=models.CASCADE)
@@ -95,5 +110,5 @@ class Respuesta(models.Model):
     #p10 = models.CharField()
 
     def __str__(self):
-        return '{self.indexes}'
+        return f'{self.indexes}'
 
