@@ -84,7 +84,10 @@ class Coevaluacion(models.Model):
     )
     fecha_inicio = models.DateField(default=date.today)
     fecha_fin = models.DateField()
-    estado = models.CharField(default=0)
+    estado = models.CharField(
+        max_length=1,
+        choices=ESTADO,
+        default=0)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
 
     def __str__(self):
