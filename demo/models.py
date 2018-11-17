@@ -77,10 +77,15 @@ class EstudianteEquipo(models.Model):
 
 
 class Coevaluacion(models.Model):
-    fecha_inicio = models.DateField(default= date.today)
+    ESTADO = (
+        (0, 'Abierta'),
+        (1, 'Cerrada'),
+        (2, 'Publicada'),
+    )
+    fecha_inicio = models.DateField(default=date.today)
     fecha_fin = models.DateField()
-    #estado = models.CharField(default= 'Abierto')
-    #curso = models.ForeignKey()
+    estado = models.CharField(default=0)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.fecha_inicio}-{self.fecha_fin}'
@@ -89,8 +94,8 @@ class InstanciaCoevaluacion(models.Model):
     evaluador = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
     evaluado = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
-    # id_coevaluacion = models.ForeignKey(Coevaluacion.indexes)
-    fecha_respuesta = models.DateField(default= None)
+    id_coevaluacion = models.ForeignKey(Coevaluacion, on_delete=models.CASCADE)
+    fecha_respuesta = models.DateField(default=None)
     respondida = models.BooleanField(default=False)
 
     def __str__(self):
@@ -98,16 +103,49 @@ class InstanciaCoevaluacion(models.Model):
 
 class Respuesta(models.Model):
     instancia_coevaluacion = models.ForeignKey(InstanciaCoevaluacion, on_delete=models.CASCADE)
-    #p1 = models.IntegerField(min_value=0, max_value=5)
-    #p2 = models.IntegerField(min_value=0, max_value=5)
-    #p3 = models.IntegerField(min_value=0, max_value=5)
-    #p4 = models.IntegerField(min_value=0, max_value=5)
-    #p5 = models.IntegerField(min_value=0, max_value=5)
-    #p6 = models.IntegerField(min_value=0, max_value=5)
-    #p7 = models.IntegerField(min_value=0, max_value=5)
-    #p8 = models.IntegerField(min_value=0, max_value=5)
-    #p9 = models.CharField()
-    #p10 = models.CharField()
+    NOTA = (
+        (0, '1.0'),
+        (1, '2.0'),
+        (2, '3.0'),
+        (3, '4.0'),
+        (4, '5.0'),
+        (5, '6.0'),
+        (6, '7.0'),
+    )
+    p1 = models.CharField(
+        max_length=1,
+        choices=NOTA
+    )
+    p2 = models.CharField(
+        max_length=1,
+        choices=NOTA
+    )
+    p3 = models.CharField(
+        max_length=1,
+        choices=NOTA
+    )
+    p4 = models.CharField(
+        max_length=1,
+        choices=NOTA
+    )
+    p5 = models.CharField(
+        max_length=1,
+        choices=NOTA
+    )
+    p6 = models.CharField(
+        max_length=1,
+        choices=NOTA
+    )
+    p7 = models.CharField(
+        max_length=1,
+        choices=NOTA
+    )
+    p8 = models.CharField(
+        max_length=1,
+        choices=NOTA
+    )
+    p9 = models.CharField(max_length=1100)
+    p10 = models.CharField(max_length=1100)
 
     def __str__(self):
         return f'{self.indexes}'
