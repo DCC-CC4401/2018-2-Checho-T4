@@ -95,7 +95,7 @@ class Coevaluacion(models.Model):
 
 class InstanciaCoevaluacion(models.Model):
     evaluador = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
-    evaluado = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
+    evaluado = models.ForeignKey(PersonaNatural, related_name='instancia_coevaluacion_evaluado', on_delete=models.CASCADE)
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
     id_coevaluacion = models.ForeignKey(Coevaluacion, on_delete=models.CASCADE)
     fecha_respuesta = models.DateField(default=None)
