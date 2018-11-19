@@ -93,6 +93,8 @@ class Coevaluacion(models.Model):
     def __str__(self):
         return f'{self.fecha_inicio}-{self.fecha_fin}'
 
+
+
 class InstanciaCoevaluacion(models.Model):
     evaluador = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
     evaluado = models.ForeignKey(PersonaNatural, related_name='instancia_coevaluacion_evaluado', on_delete=models.CASCADE)
@@ -100,6 +102,7 @@ class InstanciaCoevaluacion(models.Model):
     id_coevaluacion = models.ForeignKey(Coevaluacion, on_delete=models.CASCADE)
     fecha_respuesta = models.DateField(default=None)
     respondida = models.BooleanField(default=False)
+    respuesta = models.ForeignKey('Respuesta', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.fecha_respuesta}'
