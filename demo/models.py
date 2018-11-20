@@ -95,7 +95,7 @@ class InstanciaCoevaluacion(models.Model):
     id_coevaluacion = models.ForeignKey(Coevaluacion, on_delete=models.CASCADE)
     fecha_respuesta = models.DateField(default=None)
     respondida = models.BooleanField(default=False)
-    respuesta = models.ForeignKey('Respuesta', related_name='instancias_coevaluacion', on_delete=models.CASCADE)
+    respuesta = models.OneToOneField('Respuesta', related_name='instancias_coevaluacion', on_delete=models.CASCADE)
     
 
     def __str__(self):
