@@ -6,22 +6,27 @@ from datetime import date
 from django.db import models
 from django.contrib.auth.models import User
 
-class Usuario(models.Model):
-  user = models.ForeignKey(User, on_delete=models.CASCADE)
-  rut = models.IntegerField()
-  email = models.EmailField()
 
-  def __str__(self):
-    return f'{self.email}-{self.rut}'
+class Usuario(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rut = models.IntegerField()
+    email = models.EmailField()
+
+    def __str__(self):
+        return f'{self.email}-{self.rut}'
+
 
 class Admin(Usuario):
-  def is_admin(self):
-    return True
+    def is_admin(self):
+        return True
+
 
 class PersonaNatural(Usuario):
     curso = models.ManyToManyField('Curso', through='Cargo')
+
     def is_admin(self):
         return False
+
 
 class Curso(models.Model):
     SEMESTRE = (
@@ -29,7 +34,7 @@ class Curso(models.Model):
         (1, 'Otoño'),
         (2, 'Primavera'),
     )
-    integrantes = models.ManyToManyField('PersonaNatural',related_name='curso_integrantes', through='Cargo')
+    integrantes = models.ManyToManyField('PersonaNatural', related_name='curso_integrantes', through='Cargo')
     nombre = models.CharField(max_length=50)
     codigo = models.CharField(max_length=50)
     seccion = models.IntegerField()
@@ -42,6 +47,7 @@ class Curso(models.Model):
     def __str__(self):
         return f'{self.codigo}-{self.nombre}-{self.seccion}-{self.semestre}-{self.anho}'
 
+
 class Cargo(models.Model):
     CARGO = (
         (0, 'Profesor'),
@@ -49,7 +55,7 @@ class Cargo(models.Model):
         (2, 'Ayudante'),
         (3, 'Estudiante'),
     )
-    estudiante = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
+    persona = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     cargo = models.CharField(
         max_length=1,
@@ -57,23 +63,15 @@ class Cargo(models.Model):
     )
 
     def __str__(self):
-        return f'{self.estudiante}-{self.cargo}-{self.curso}'
+        return f'{self.persona}-{self.cargo}-{self.curso}'
 
 
 class Equipo(models.Model):
     nombre = models.CharField(max_length=50)
-    integrantes = models.ManyToManyField('PersonaNatural', through='EstudianteEquipo')
+    integrantes = models.ManyToManyField('PersonaNatural')
 
     def __str__(self):
         return f'{self.nombre}'
-
-
-class EstudianteEquipo(models.Model):
-    estudiante = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
-    equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.estudiante}-{self.equipo}'
 
 
 class Coevaluacion(models.Model):
@@ -89,26 +87,43 @@ class Coevaluacion(models.Model):
         choices=ESTADO,
         default=0)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    preguntas = models.OneToOneField('Preguntas', related_name='coevaluacion', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.fecha_inicio}-{self.fecha_fin}'
 
 
-
 class InstanciaCoevaluacion(models.Model):
-    evaluador = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
-    evaluado = models.ForeignKey(PersonaNatural, related_name='instancia_coevaluacion_evaluado', on_delete=models.CASCADE)
+    evaluador = models.ForeignKey(PersonaNatural, related_name='instancia_coevaluacion_evaluador',
+                                  on_delete=models.CASCADE)
+    evaluado = models.ForeignKey(PersonaNatural, related_name='instancia_coevaluacion_evaluado',
+                                 on_delete=models.CASCADE)
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
     id_coevaluacion = models.ForeignKey(Coevaluacion, on_delete=models.CASCADE)
     fecha_respuesta = models.DateField(default=None)
     respondida = models.BooleanField(default=False)
-    respuesta = models.ForeignKey('Respuesta', on_delete=models.CASCADE)
+    respuesta = models.OneToOneField('Respuesta', related_name='instancias_coevaluacion', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.fecha_respuesta}'
 
+
+class Preguntas(models.Model):
+    p1 = models.CharField(max_length=1100)
+    p2 = models.CharField(max_length=1100)
+    p3 = models.CharField(max_length=1100)
+    p4 = models.CharField(max_length=1100)
+    p5 = models.CharField(max_length=1100)
+    p6 = models.CharField(max_length=1100)
+    p7 = models.CharField(max_length=1100)
+    p8 = models.CharField(max_length=1100)
+    p9 = models.CharField(max_length=1100)
+    p10 = models.CharField(max_length=1100)
+
+    def __str__(self):
+        return f'{self.indexes}'
+
 class Respuesta(models.Model):
-    instancia_coevaluacion = models.ForeignKey(InstanciaCoevaluacion, on_delete=models.CASCADE)
     NOTA = (
         (0, '1.0'),
         (1, '2.0'),
@@ -155,4 +170,3 @@ class Respuesta(models.Model):
 
     def __str__(self):
         return f'{self.indexes}'
-

@@ -9,7 +9,6 @@ from demo.models import Admin
 from demo.models import Curso
 from demo.models import Cargo
 from demo.models import Equipo
-from demo.models import EstudianteEquipo
 from demo.models import Coevaluacion
 from demo.models import InstanciaCoevaluacion
 from demo.models import Respuesta
@@ -19,7 +18,6 @@ admin.site.register(Admin)
 admin.site.register(Curso)
 admin.site.register(Cargo)
 admin.site.register(Equipo)
-admin.site.register(EstudianteEquipo)
 admin.site.register(Coevaluacion)
 admin.site.register(InstanciaCoevaluacion)
 admin.site.register(Respuesta)
