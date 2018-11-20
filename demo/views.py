@@ -13,6 +13,7 @@ class LoginView(TemplateView):
 class Coevaluacion(TemplateView):
     pass
 
+
 class CoevaluacionAlumnoView(TemplateView):
     template_name = 'coevaluacion-vista-alumno.html'
 
@@ -28,6 +29,7 @@ class CursoAlumnoView(TemplateView):
 class CursoDocenteView(TemplateView):
     template_name = 'curso-vista-docente.html'
 
+
 class Home(TemplateView):
     pass
 
@@ -39,6 +41,7 @@ class HomeDocenteView(TemplateView):
 
 class HomeProfesorView(TemplateView):
     template_name = 'home-vista-profesor.html'
+
 
 class Perfil(TemplateView):
     pass

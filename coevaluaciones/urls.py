@@ -19,7 +19,10 @@ from django.contrib import admin
 import demo.views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin', admin.site.urls),
+    url(r'^curso', demo.views.Curso.as_view()),
+    url(r'^home', demo.views.Home.as_view()),
+    url(r'^coevaluacion', demo.views.Coevaluacion.as_view()),
+    url(r'^perfil', demo.views.Perfil.as_view()),
     url(r'', demo.views.LoginView.as_view()),
-
 ]
