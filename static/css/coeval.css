@@ -436,10 +436,10 @@ button:active > .clickable-icon {
     margin-right: 5px;
 }
 
-.cargos-alumno { background-image: url(../icon/cargos-alumno.png) }
-.cargos-auxiliar { background-image: url(../icon/cargos-auxiliar.png) }
-.cargos-ayudante { background-image: url(../icon/cargos-ayudante.png) }
-.cargos-profesor { background-image: url(../icon/cargos-profesor.png) }
+.cargos-alumno { background-image: url(../../icon/cargos-alumno.png) }
+.cargos-auxiliar { background-image: url(../../icon/cargos-auxiliar.png) }
+.cargos-ayudante { background-image: url(../../icon/cargos-ayudante.png) }
+.cargos-profesor { background-image: url(../../icon/cargos-profesor.png) }
 
 
 
