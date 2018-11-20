@@ -20,5 +20,6 @@ import demo.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', demo.views.DemoView.as_view()),
+    url(r'', demo.views.LoginView.as_view()),
+
 ]
