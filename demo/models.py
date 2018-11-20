@@ -62,18 +62,11 @@ class Cargo(models.Model):
 
 class Equipo(models.Model):
     nombre = models.CharField(max_length=50)
-    integrantes = models.ManyToManyField('PersonaNatural', through='EstudianteEquipo')
+    integrantes = models.ManyToManyField('PersonaNatural')
 
     def __str__(self):
         return f'{self.nombre}'
 
-
-class EstudianteEquipo(models.Model):
-    estudiante = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
-    equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.estudiante}-{self.equipo}'
 
 
 class Coevaluacion(models.Model):
@@ -96,20 +89,19 @@ class Coevaluacion(models.Model):
 
 
 class InstanciaCoevaluacion(models.Model):
-    evaluador = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
+    evaluador = models.ForeignKey(PersonaNatural, related_name='instancia_coevaluacion_evaluador', on_delete=models.CASCADE)
     evaluado = models.ForeignKey(PersonaNatural, related_name='instancia_coevaluacion_evaluado', on_delete=models.CASCADE)
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
     id_coevaluacion = models.ForeignKey(Coevaluacion, on_delete=models.CASCADE)
     fecha_respuesta = models.DateField(default=None)
     respondida = models.BooleanField(default=False)
-    respuesta = models.ForeignKey('Respuesta', on_delete=models.CASCADE)
+    respuesta = models.ForeignKey('Respuesta', related_name='instancias_coevaluacion', on_delete=models.CASCADE)
     
 
     def __str__(self):
         return f'{self.fecha_respuesta}'
 
 class Respuesta(models.Model):
-    instancia_coevaluacion = models.ForeignKey(InstanciaCoevaluacion, on_delete=models.CASCADE)
     NOTA = (
         (0, '1.0'),
         (1, '2.0'),
