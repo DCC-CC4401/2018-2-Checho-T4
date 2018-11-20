@@ -103,7 +103,6 @@ class InstanciaCoevaluacion(models.Model):
     fecha_respuesta = models.DateField(default=None)
     respondida = models.BooleanField(default=False)
     respuesta = models.ForeignKey('Respuesta', on_delete=models.CASCADE)
-    
 
     def __str__(self):
         return f'{self.fecha_respuesta}'
