@@ -1,14 +1,36 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+
 
 from django.views.generic import TemplateView
-
+from .models import *
 
 
 class LoginView(TemplateView):
     template_name = 'login.html'
+
+    def inicio_sesion(request):
+        if request.POST:
+            username = request.POST.get('rut')
+            password = request.POST.get('password')
+
+            log_user = authenticate(rut=username, password=password)
+
+            if log_user is not None:
+                login(request, log_user)
+
+                usuario = Usuario.objects.get(user=log_user)
+
+                return HttpResponseRedirect(reverse('usuarios:perfil', kwargs={'usuario_id': usuario.id}))
+
+        logout(request)
+
+        return render(request, 'home-vista-alumno.html', {})
 
 class Coevaluacion(TemplateView):
     pass
