@@ -25,16 +25,16 @@
 
         <!-- Cuerpo -->
         <div class="container text-center"> <!-- Contenedor responsivo, se adapta a la pantalla con puntos de quiebre. -->
-            <form class="form-signin">
+            <form class="form-signin" method="post" id="login_form" action="login.html">
                 {% csrf_token %}
                 <h1 class="mt-5 mb-3">Bienvenid@</h1>
                 <h3 class="font-weight-normal mb-3">Inicia sesión para acceder</h3>
                 <p class="mb-2">Ingresa con tu RUT y contraseña</p>
                 <label for="inputUser" class="sr-only">RUT</label>
-                <input name='rut' type="email" id="inputUser" class="form-control" placeholder="RUT" required autofocus>
+                <input name='rut' id="inputUser" class="form-control" placeholder="RUT" required autofocus>
                 <label for="inputPassword" class="sr-only">Contraseña</label>
                 <input name ='password' type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
-                <button type="button" class="btn btn-success" onclick="$('#login_form').submit()">Ingresar</button>
+                <button type="submit" class="btn btn-success" >Ingresar</button>
                 <p class="mt-4 text-muted small">¿No has recibido tu contraseña?<br>¡Contacta a tu profesor/administrador!</p>
             </form>
         </div>

@@ -3,7 +3,8 @@ from __future__ import unicode_literals
 
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
+from django.template import RequestContext
 from django.urls import reverse
 
 
@@ -14,23 +15,23 @@ from .models import *
 class LoginView(TemplateView):
     template_name = 'login.html'
 
+    @property
     def inicio_sesion(request):
         if request.POST:
             username = request.POST.get('rut')
             password = request.POST.get('password')
-
+            print(username)
+            print(password)
             log_user = authenticate(rut=username, password=password)
-
             if log_user is not None:
                 login(request, log_user)
 
                 usuario = Usuario.objects.get(user=log_user)
-
-                return HttpResponseRedirect(reverse('usuarios:perfil', kwargs={'usuario_id': usuario.id}))
+                return HttpResponseRedirect('/home')
 
         logout(request)
 
-        return render(request, 'home-vista-alumno.html', {})
+        return render_to_response('login.html', context_instance=RequestContext(request))
 
 class Coevaluacion(TemplateView):
     pass
@@ -51,9 +52,8 @@ class CursoAlumnoView(TemplateView):
 class CursoDocenteView(TemplateView):
     template_name = 'curso-vista-docente.html'
 
-
-class Home(TemplateView):
-    pass
+class Home(TemplateView):#
+    template_name = 'curso-vista-docente.html'
 
 class HomeAlumnoView(TemplateView):
     template_name = 'home-vista-alumno.html'
