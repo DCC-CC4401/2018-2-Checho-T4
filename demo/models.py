@@ -21,13 +21,20 @@ class Admin(Usuario):
 
 
 class PersonaNatural(Usuario):
+    #CARGO = (
+    #    ('0', 'Profesor'),
+    #    ('1', 'Auxiliar'),
+    #    ('2', 'Ayudante'),
+    #    ('3', 'Estudiante'),
+    #)
+    #dicc = dict(CARGO)
     curso = models.ManyToManyField('Curso', through='Cargo')
 
     def is_admin(self):
         return False
 
-    def tipo_persona(self):
-        self.curso.get
+    def cargo_persona(self):
+        return self.curso.first().cargo_set.first().cargo
 
 class Curso(models.Model):
     SEMESTRE = (
