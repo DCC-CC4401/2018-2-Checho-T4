@@ -31,9 +31,9 @@ class PersonaNatural(Usuario):
 
 class Curso(models.Model):
     SEMESTRE = (
-        (0, 'Verano'),
-        (1, 'Otoño'),
-        (2, 'Primavera'),
+        ('0', 'Verano'),
+        ('1', 'Otoño'),
+        ('2', 'Primavera'),
     )
     integrantes = models.ManyToManyField('PersonaNatural', related_name='curso_integrantes', through='Cargo')
     nombre = models.CharField(max_length=50)
@@ -51,10 +51,10 @@ class Curso(models.Model):
 
 class Cargo(models.Model):
     CARGO = (
-        (0, 'Profesor'),
-        (1, 'Auxiliar'),
-        (2, 'Ayudante'),
-        (3, 'Estudiante'),
+        ('0', 'Profesor'),
+        ('1', 'Auxiliar'),
+        ('2', 'Ayudante'),
+        ('3', 'Estudiante'),
     )
     persona = models.ForeignKey(PersonaNatural, on_delete=models.CASCADE)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
@@ -77,9 +77,9 @@ class Equipo(models.Model):
 
 class Coevaluacion(models.Model):
     ESTADO = (
-        (0, 'Abierta'),
-        (1, 'Cerrada'),
-        (2, 'Publicada'),
+        ('0', 'Abierta'),
+        ('1', 'Cerrada'),
+        ('2', 'Publicada'),
     )
     fecha_inicio = models.DateField(default=date.today)
     fecha_fin = models.DateField()
@@ -126,13 +126,13 @@ class Preguntas(models.Model):
 
 class Respuesta(models.Model):
     NOTA = (
-        (0, '1.0'),
-        (1, '2.0'),
-        (2, '3.0'),
-        (3, '4.0'),
-        (4, '5.0'),
-        (5, '6.0'),
-        (6, '7.0'),
+        ('0', '1.0'),
+        ('1', '2.0'),
+        ('2', '3.0'),
+        ('3', '4.0'),
+        ('4', '5.0'),
+        ('5', '6.0'),
+        ('6', '7.0'),
     )
     p1 = models.CharField(
         max_length=1,
