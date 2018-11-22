@@ -15,23 +15,16 @@ from .models import *
 class LoginView(TemplateView):
     template_name = 'login.html'
 
-    @property
-    def inicio_sesion(request):
-        if request.POST:
-            username = request.POST.get('rut')
-            password = request.POST.get('password')
-            print(username)
-            print(password)
-            log_user = authenticate(rut=username, password=password)
-            if log_user is not None:
-                login(request, log_user)
-
-                usuario = Usuario.objects.get(user=log_user)
-                return HttpResponseRedirect('/home')
-
-        logout(request)
-
-        return render_to_response('login.html', context_instance=RequestContext(request))
+def inicio_sesion(request):
+    if request.POST:
+        username = request.POST.get('rut')
+        password = request.POST.get('password')
+        log_user = authenticate(request, username=username, password=password)
+        if log_user is not None:
+            login(request, log_user)
+            return HttpResponseRedirect('/home')
+    logout(request)
+    return render(request, 'login.html', {})
 
 class Coevaluacion(TemplateView):
     pass

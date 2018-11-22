@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^home', demo.views.Home.as_view(), name='home'),
     url(r'^coevaluacion', demo.views.Coevaluacion.as_view(), name='coevaluacion'),
     url(r'^perfil', demo.views.Perfil.as_view(), name='perfil'),
+    url(r'^login', demo.views.inicio_sesion),
     url(r'', demo.views.LoginView.as_view(), name='login'),
 ]
