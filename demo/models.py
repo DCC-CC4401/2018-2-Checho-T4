@@ -21,10 +21,21 @@ class Admin(Usuario):
 
 
 class PersonaNatural(Usuario):
+    # CARGO = (
+    #    ('0', 'Profesor'),
+    #    ('1', 'Auxiliar'),
+    #    ('2', 'Ayudante'),
+    #    ('3', 'Estudiante'),
+    # )
+    # dicc = dict(CARGO)
     curso = models.ManyToManyField('Curso', through='Cargo')
 
     def is_admin(self):
         return False
+
+    def cargo_persona(self):
+        return self.curso.first().cargo_set.first().cargo
+
 
 class Curso(models.Model):
     SEMESTRE = (
@@ -120,6 +131,7 @@ class Preguntas(models.Model):
 
     def __str__(self):
         return f'{self.indexes}'
+
 
 class Respuesta(models.Model):
     NOTA = (
