@@ -34,7 +34,7 @@ class PersonaNatural(Usuario):
         return False
 
     def cargo_persona(self):
-        return self.curso.first().cargo_set.first().cargo
+        return self.cargo_set.first().cargo
 
 
 class Curso(models.Model):

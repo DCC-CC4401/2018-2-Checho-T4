@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.urls import reverse
@@ -49,10 +49,21 @@ class Home(TemplateView):
     pass
 
 def home(request):
-    user = request.user
-    print(user)
-    return render(request, 'home-vista-alumno.html', {})
+    log_user = request.user
+    persona = PersonaNatural.objects.get(user = log_user)
+    print(persona)
+    cargo = persona.cargo_persona()
+    print(log_user)
+    print(cargo)
 
+    if (cargo == '0'): #profesor
+        return render(request, 'home-vista-profesor.html', {})
+    elif (cargo == '1' or cargo == '2'): #auxiliar o ayudante
+        return render(request, 'home-vista-docente.html', {})
+    elif (cargo == '3'): #alumno
+      return render(request, 'home-vista-alumno.html', {})
+    else:
+        return HttpResponseNotFound()
 
 
 class HomeAlumnoView(TemplateView):
