@@ -26,9 +26,6 @@ class PersonaNatural(Usuario):
     def is_admin(self):
         return False
 
-    def tipo_persona(self):
-        self.curso.get
-
 class Curso(models.Model):
     SEMESTRE = (
         ('0', 'Verano'),
