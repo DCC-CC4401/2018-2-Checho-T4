@@ -45,8 +45,15 @@ class CursoAlumnoView(TemplateView):
 class CursoDocenteView(TemplateView):
     template_name = 'curso-vista-docente.html'
 
-class Home(TemplateView):#
-    template_name = 'curso-vista-docente.html'
+class Home(TemplateView):
+    pass
+
+def home(request):
+    user = request.user
+    print(user)
+    return render(request, 'home-vista-alumno.html', {})
+
+
 
 class HomeAlumnoView(TemplateView):
     template_name = 'home-vista-alumno.html'

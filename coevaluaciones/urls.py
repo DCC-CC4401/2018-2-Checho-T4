@@ -21,7 +21,7 @@ import demo.views
 urlpatterns = [
     url(r'^admin', admin.site.urls),
     url(r'^curso', demo.views.Curso.as_view()),
-    url(r'^home', demo.views.Home.as_view(), name='home'),
+    url(r'^home', demo.views.home),
     url(r'^coevaluacion', demo.views.Coevaluacion.as_view(), name='coevaluacion'),
     url(r'^perfil', demo.views.Perfil.as_view(), name='perfil'),
     url(r'^login', demo.views.inicio_sesion),
