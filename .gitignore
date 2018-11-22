@@ -197,7 +197,7 @@ fabric.properties
 ### Intellij+all Patch ###
 # Ignores the whole .idea folder and all .iml files
 # See https://github.com/joeblau/gitignore.io/issues/186 and https://github.com/joeblau/gitignore.io/issues/360
-
+.idea/Tarea 4.iml
 .idea/
 
 # Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
