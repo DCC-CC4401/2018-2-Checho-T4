@@ -9,11 +9,10 @@ from django.contrib.auth.models import User
 
 class Usuario(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rut = models.IntegerField()
     email = models.EmailField()
 
     def __str__(self):
-        return f'{self.email}-{self.rut}'
+        return f'{self.email}'
 
 
 class Admin(Usuario):
@@ -27,6 +26,8 @@ class PersonaNatural(Usuario):
     def is_admin(self):
         return False
 
+    def tipo_persona(self):
+        self.curso.get
 
 class Curso(models.Model):
     SEMESTRE = (
@@ -38,7 +39,7 @@ class Curso(models.Model):
     nombre = models.CharField(max_length=50)
     codigo = models.CharField(max_length=50)
     seccion = models.IntegerField()
-    anho = models.DateField()
+    anho = models.IntegerField()
     semestre = models.CharField(
         max_length=1,
         choices=SEMESTRE,
