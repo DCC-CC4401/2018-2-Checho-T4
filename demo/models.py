@@ -79,6 +79,7 @@ class Cargo(models.Model):
 
 
 class Equipo(models.Model):
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=50)
     integrantes = models.ManyToManyField('PersonaNatural')
 
