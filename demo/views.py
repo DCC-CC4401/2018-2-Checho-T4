@@ -50,21 +50,24 @@ class Home(TemplateView):
 
 def home(request):
     log_user = request.user
-    persona = PersonaNatural.objects.get(user = log_user)
-    print(persona)
-    cargo = persona.cargo_persona()
-    print(log_user)
-    print(cargo)
-
-    if (cargo == '0'): #profesor
-        return render(request, 'home-vista-profesor.html', {})
-    elif (cargo == '1' or cargo == '2'): #auxiliar o ayudante
-        return render(request, 'home-vista-docente.html', {})
-    elif (cargo == '3'): #alumno
-      return render(request, 'home-vista-alumno.html', {})
-    else:
+    try:
+        persona = User.objects.get(username = log_user)
+        if(PersonaNatural.objects.filter(user = log_user)):
+            cargo = PersonaNatural.objects.get(user = log_user).cargo_persona()
+            if (cargo == '0'): #profesor
+                return render(request, 'home-vista-profesor.html', {})
+            elif (cargo == '1' or cargo == '2'): #auxiliar o ayudante
+                return render(request, 'home-vista-docente.html', {})
+            elif (cargo == '3'): #alumno
+              return render(request, 'home-vista-alumno.html', {})
+            else:
+                return HttpResponseNotFound()
+        elif(Admin.objects.filter(user=log_user)):
+            return HttpResponseRedirect('admin')
+        else:
+            return HttpResponseNotFound('Debes estar registrado en el sistema como persona natural o administrador')
+    except:
         return HttpResponseNotFound()
-
 
 class HomeAlumnoView(TemplateView):
     template_name = 'home-vista-alumno.html'
