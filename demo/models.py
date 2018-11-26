@@ -93,6 +93,7 @@ class Coevaluacion(models.Model):
         ('1', 'Cerrada'),
         ('2', 'Publicada'),
     )
+    titulo = models.CharField(max_length=140)
     fecha_inicio = models.DateField(default=date.today)
     fecha_fin = models.DateField()
     estado = models.CharField(
