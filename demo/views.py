@@ -33,6 +33,15 @@ class Coevaluacion(TemplateView):
 class CoevaluacionAlumnoView(TemplateView):
     template_name = 'coevaluacion-vista-alumno.html'
 
+def coevaluacion_alumno(request, usuario_id, coevaluacion_id):
+    usuario = Usuario.objects.get(pk=usuario_id)
+    titulo = Coevaluacion.objects.get(pk=coevaluacion_id).titulo
+    fecha_inicio = Coevaluacion.objects.get(pk=coevaluacion_id).fecha_inicio
+    fecha_fin = Coevaluacion.objects.get(pk=coevaluacion_id).fecha_fin
+    curso = Coevaluacion.objects.get(pk=coevaluacion_id).curso
+    estado = Coevaluacion.objects.get(pk=coevaluacion_id).estado
+    grupo = Equipo.objects.get()
+
 class CoevaluacionDocenteView(TemplateView):
     template_name = 'coevaluacion-vista-docente.html'
 

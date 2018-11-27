@@ -104,7 +104,7 @@ class Coevaluacion(models.Model):
     preguntas = models.OneToOneField('Preguntas', related_name='coevaluacion', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.fecha_inicio}-{self.fecha_fin}'
+        return f'{self.titulo}'
 
 
 class InstanciaCoevaluacion(models.Model):
