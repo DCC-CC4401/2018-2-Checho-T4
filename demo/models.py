@@ -37,8 +37,10 @@ class PersonaNatural(Usuario):
         return False
 
     def cargo_persona(self):
-        return self.cargo_set.first().cargo
+        return self.cargo_set.order_by('-curso__anho','-curso__semestre','curso__seccion').first().cargo
 
+    def coevaluaciones(self):
+        return Coevaluacion.objects.filter(curso__in=self.curso.filter(cargo__cargo='3')).order_by('-fecha_inicio')
 
 class Curso(models.Model):
     SEMESTRE = (
@@ -105,6 +107,13 @@ class Coevaluacion(models.Model):
     def __str__(self):
         return f'{self.fecha_inicio}-{self.fecha_fin}'
 
+    def instancia_coevaluacion(self,user):
+        return self.instanciacoevaluacion_set.filter(evaluador=user)
+
+    def pendiente(self, user):
+        contestadas= self.instanciacoevaluacion_set.filter(evaluador=user).count()
+        integrantes = user.equipo_set.filter(curso=self.curso).first().integrantes.count()
+        return contestadas, integrantes
 
 class InstanciaCoevaluacion(models.Model):
     evaluador = models.ForeignKey(PersonaNatural, related_name='instancia_coevaluacion_evaluador',
@@ -114,7 +123,6 @@ class InstanciaCoevaluacion(models.Model):
     equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
     id_coevaluacion = models.ForeignKey(Coevaluacion, on_delete=models.CASCADE)
     fecha_respuesta = models.DateField(default=None)
-    respondida = models.BooleanField(default=False)
     respuesta = models.OneToOneField('Respuesta', related_name='instancias_coevaluacion', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -134,7 +142,7 @@ class Preguntas(models.Model):
     p10 = models.CharField(max_length=1100)
 
     def __str__(self):
-        return f'{self.indexes}'
+        return f'{self.p1}'
 
 
 class Respuesta(models.Model):
@@ -183,4 +191,4 @@ class Respuesta(models.Model):
     p10 = models.CharField(max_length=1100)
 
     def __str__(self):
-        return f'{self.indexes}'
+        return f'{self.p1}'
